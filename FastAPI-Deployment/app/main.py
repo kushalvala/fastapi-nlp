@@ -1,8 +1,10 @@
 from pydantic import BaseModel
 from fastapi import FastAPI
 import joblib
+import uvicorn
+
 app = FastAPI()
-model = joblib.load('/model/model_pipeline.joblib')
+model = joblib.load('../model/model_pipeline.joblib')
 
 
 class Stroke(BaseModel):
@@ -49,5 +51,5 @@ def predict_stroke(data: Stroke):
     }
 
 
-# if __name__ == '__main__':
-#     uvicorn.run(app, host='127.0.0.1', port=8000)
+if __name__ == '__main__':
+    uvicorn.run(app, host='127.0.0.1', port=8000)
