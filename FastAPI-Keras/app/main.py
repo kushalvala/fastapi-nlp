@@ -5,15 +5,10 @@ from fastapi import FastAPI
 import tensorflow as tf
 app = FastAPI()
 
-model = tf.keras.models.load_model('../model/tf_keras_imdb')
+model = tf.keras.models.load_model('/model/tf_keras_imdb')
 
 
 class Reviews(BaseModel):
-    """[summary]
-
-    Args:
-        BaseModel ([type]): [description]
-    """
     review: str
 
 
@@ -41,4 +36,4 @@ def predict_review(data: Reviews):
 
 
 if __name__ == '__main__':
-    uvicorn.run(app, host='127.0.0.1', port=8000)
+    uvicorn.run(app, host='127.0.0.1', port=8010)

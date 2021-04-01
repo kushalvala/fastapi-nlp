@@ -1,18 +1,13 @@
 import uvicorn
+from typing import List
 from pydantic import BaseModel
 from fastapi import FastAPI
 import tensorflow as tf
 app = FastAPI()
 
-model = tf.keras.models.load_model('model/tf_keras_imdb')
-
+model = tf.keras.models.load_model('../model/tf_keras_imdb.h5')
 
 class Reviews(BaseModel):
-    """[summary]
-
-    Args:
-        BaseModel ([type]): [description]
-    """
     review: str
 
 
@@ -23,20 +18,21 @@ def index():
 
 @app.post('/predict')
 def predict_review(data: Reviews):
-    """[summary]
+    """ FastAPI 
 
     Args:
-        data (Reviews): [description]
+        data (Reviews): json file 
 
     Returns:
-        [type]: [description]
+        prediction: probability of review being positive
     """
     data = data.dict()
-    prediction = model.predict([data['review']])
+    review = data['review']
+    prediction = model.predict([review])
     return {
         'prediction': prediction.tolist()[0][0]
     }
 
 
 if __name__ == '__main__':
-    uvicorn.run(app, host='127.0.0.1', port=5000)
+    uvicorn.run(app, host='127.0.0.1', port=8000)
