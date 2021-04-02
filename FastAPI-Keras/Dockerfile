@@ -6,6 +6,6 @@ COPY ./model /model/
 
 COPY ./app /app
 
-EXPOSE 8010
+EXPOSE 8000
 
 CMD ["python", "main.py"]
